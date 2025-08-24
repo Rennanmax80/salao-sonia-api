@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Salao = require('../models/salao');
 const Servico = require('../models/servico');
+const turf = require('@turf/turf')
 
 router.post('/', async (req, res) => {
     try{
@@ -31,6 +32,23 @@ router.get('/servicos/:salaoId', async (req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    try{    
+        const salao = await Salao.findById(req.params.id).select(
+            'capa nome endereco.cidade geo.coordinates telefone'
+        );
+
+        // DISTANCIA
+        const distancia = turf.distance(
+            turf.point(salao.geo.coordinates),
+            turf.point([-22.776275, -43.401751])
+        )
+
+        res.json({ error: false, salao, distancia})
+    }catch(err){
+        res.json({ error: true, message: err.message})
+    }
+})
 
 module.exports = router;
 

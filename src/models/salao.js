@@ -26,8 +26,12 @@ const salao = new Schema({
         pais: String,
     },
     geo: {
-        type: String,
-        coodinates: Array,
+        type: {
+            type: String
+        },
+        coordinates: {
+            type: [Number]
+        }
     },
     dataCadastro: {
         type: Date,
