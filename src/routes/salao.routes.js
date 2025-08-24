@@ -3,7 +3,6 @@ const router = express.Router()
 const Salao = require('../models/salao');
 const Servico = require('../models/servico');
 
-
 router.post('/', async (req, res) => {
     try{
 
@@ -31,6 +30,7 @@ router.get('/servicos/:salaoId', async (req, res) => {
         res.json({error: true, message: err.message})
     }
 })
+
 
 module.exports = router;
 
